@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Content</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFCD00;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .message {
+            background-color: #111;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #FFCD00;
+        }
+        a {
+            color: #FFCD00;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Protected Content</h1>
+    <p>Welcome to the protected area.</p>
+    <h2>Contact Messages</h2>
+    <div id="messages"></div>
+    <p><a href="index.html">Back to Homepage</a></p>
+    <script>
+        if (sessionStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'protected.html';
+        }
+
+        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        const messagesDiv = document.getElementById('messages');
+        messages.forEach(msg => {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message';
+            msgDiv.innerHTML = `<strong>${msg.name}</strong> (${msg.timestamp})<br>${msg.message}`;
+            messagesDiv.appendChild(msgDiv);
+        });
+    </script>
+</body>
+</html>

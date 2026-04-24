@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Content</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFCD00;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        a {
+            color: #FFCD00;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Protected Content</h1>
+    <p>Enter password to access protected content.</p>
+    <button onclick="checkPassword()">Enter</button>
+    <p><a href="index.html">Back to Homepage</a></p>
+    <script>
+        const expectedHash = '96db3ecc8355c49b5736ca38b06e6dbb151eb6aac88cc531e074b6c91871aab9';
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const password = prompt('Enter password:');
+            if (!password) return;
+            const hash = await hashPassword(password);
+            if (hash === expectedHash) {
+                sessionStorage.setItem('authenticated', 'true');
+                window.location.href = 'protected-content.html';
+            } else {
+                alert('Incorrect password');
+            }
+        }
+    </script>
+</body>
+</html>
