@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyler Purcell - Portfolio</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFCD00;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        img {
+            max-width: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            background-color: #000000;
+            color: #FFCD00;
+            border: 1px solid #FFCD00;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            background-color: #FFCD00;
+            color: #000000;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        a {
+            color: #FFCD00;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tyler Purcell</h1>
+    <p><strong>Bio:</strong> Placeholder for Tyler Purcell's bio.</p>
+    <p><strong>Projects:</strong> Placeholder for Tyler Purcell's projects.</p>
+    <p><strong>Interests:</strong> Placeholder for Tyler Purcell's interests.</p>
+    <h2>Contact Me</h2>
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="message">Message:</label>
+        <textarea id="message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+    <p><a href="index.html">Back to Homepage</a></p>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            const timestamp = new Date().toISOString();
+            const msg = { name, message, timestamp };
+            let messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push(msg);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            alert('Message sent!');
+            document.getElementById('contactForm').reset();
+        });
+    </script>
+</body>
+</html>
